@@ -6,9 +6,18 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>信息公告</span>
-            <el-button style="float: right; padding: 3px 0" type="text"
+            <!-- <i href="" style="float: right; padding: 3px 0">了解我们</i>
+            <el-button
+              @click="
+                window.location.href(
+                  'https://github.com/ReturnTmp/vue-manage-bms'
+                )
+              "
+              style="float: right; padding: 3px 0"
+              type="text"
               >了解我们</el-button
             >
+             -->
           </div>
           <h3>欢迎使用图书管理系统！</h3>
           <ul>

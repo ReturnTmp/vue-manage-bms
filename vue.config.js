@@ -19,12 +19,13 @@ module.exports = {
       ],
     },
   },
-  // json-server
   // devServer: {
   //   proxy: {
-  //     "/": {
-  //       target: "http://localhost:3000",
+  //     "/api": {
+  //       // 匹配所有以 '/api'开头的请求路径
+  //       target: "http://localhost:7001", // 代理目标的基础路径
   //       changeOrigin: true,
+  //       pathRewrite: { "^/api": "/" }, // 代理到服务器的时候，去除api路径
   //     },
   //   },
   // },

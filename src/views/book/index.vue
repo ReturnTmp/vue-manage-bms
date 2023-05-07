@@ -34,10 +34,13 @@
 
     <el-dialog
       class="dialog-content"
-      :title="'您已借阅到《' + bookTitle + '》' + '，请妥善保管借阅二维码'"
+      title="借阅成功"
       :visible.sync="dialogVisible"
       width="30%"
     >
+      <span style="margin-bottom;: 10px">{{
+        "您已借阅到《" + bookTitle + "》" + "，请妥善保管借阅二维码"
+      }}</span>
       <img
         class="qrcode-img"
         src="../../assets/images/qrcode.png"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row class="header-row">
-      <el-card
+      <!-- <el-card
         class="image-card"
         :body-style="{ padding: '0px' }"
         shadow="hover"
@@ -13,42 +13,84 @@
             <time class="time">{{ currentDate }}</time>
           </div>
         </div>
-      </el-card>
+      </el-card> -->
 
       <el-card class="introduce-card">
         <div slot="header" class="clearfix">
-          <span>项目介绍</span>
+          <span style="width: 30%; text-align: start; display: inline-block"
+            >项目介绍</span
+          >
+          <span style="width: 70%; text-align: end; display: inline-block">
+            <svg
+              @click="win.open('https://github.com/ReturnTmp/vue-manage-bms/')"
+              style="cursor: pointer"
+              class="icon"
+              aria-hidden="true"
+            >
+              <use xlink:href="#icon-github"></use>
+            </svg>
+            <svg style="cursor: pointer" class="icon" aria-hidden="true">
+              <use xlink:href="#icon-gitee"></use>
+            </svg>
+          </span>
         </div>
+
         <div class="text item">
-          <!-- <h3>简介</h3>
-          <p class="introduce-p">
-            无虞智能安全保障系统聚焦于电力生产作业，致力将操作票制度智能化，
-            改进传统操作票制度的低效沟通的问题；能够第一时间发现安全隐患并发出警报，
-            避免电力生产中因人为失误而造成的事故；通过人工智能提升电力生产作业的准确性和效率，
-            提供更为安全和高效的监护机制。
+          <h3>功能简介</h3>
+          <p>
+            信息维护功能：对图书资源进行信息维护，包括图书信息的录入、删
+            除、修改、查询等。对读者信息的信息维护，包括读者信息的录入、删除、修改
+            查询等。对管理人员的信息维护，包括管理人员信息的录入、删除、修改、查询
+            等。
           </p>
-          <h3>优势</h3>
+          <p>
+            图书借阅功能：允许读者自行通过系统的用户端（微信或计算机）办
+            理借阅信息，如果资源满足则发送二维码给读者，读者凭二维码来图书馆取书等。
+            要求学生读者从图书馆借阅的图书不能超过 6 本，老师读者不能超过 10
+            本。
+          </p>
+          <p>
+            图书归还功能：允许读者通过专用窗口由管理员检查图书，管理员扫
+            描图书上的二维码归档图书。
+          </p>
+          <p>
+            图书报表处理功能：系统具备图书借阅统计报表功能，按月对图书借
+            阅信息进行统计分析整理，供图书馆管理员查询，并依据其调整图书馆资源配置。
+          </p>
+          <p>
+            图书推荐功能：系统具备一定的图书推荐功能，依据读者借阅信息，
+            采用机器学习的方法向读者推荐图书资源等。
+          </p>
+          <p>
+            图书互借功能：读者可以将自己拥有的个人图书资源，通过图书馆管
+            理系统向读者提供借阅。借阅者需要支付少量费用给图书馆和图书资源拥有的读
+            者。
+          </p>
+          <p>
+            违规处罚功能：如果借阅超期，系统会发送短信提醒归还图书。如果
+            提醒后仍未归还，则按要求处罚，逾期一天罚款 0.1
+            元。如果图书损坏或丢失， 则按图书价值来处理。
+          </p>
+          <p>图书信息专栏功能：包括系统信息公告、读者来信、读者咨询等等。</p>
+          <p>
+            依据用户需求定制的其他创新功能。如图书在线阅读、图书购买代办、
+            二手图书交易、学习笔记互借等等。
+          </p>
+          <!-- <h3>优势</h3>
           <ul>
-            <li>高效的电子操作票制度</li>
-            <li>高精度的人工智能检测</li>
-            <li>完善的监控报警机制</li>
+            <li></li>
           </ul> -->
         </div>
       </el-card>
 
-      <el-card class="produce-card">
+      <!-- <el-card class="produce-card">
         <div slot="header" class="clearfix">
           <span>开发日志</span>
         </div>
-        <!-- <div class="text item">
-          <p>2.12 实现用户管理模块</p>
-          <p>2.24 实现操作票开具下发模块</p>
-          <p>3.6 实现实时监控模块</p>
-          <p>3.10 实现项目介绍模块</p>
-          <p>3.28 实现算法检测模块</p>
-          <p>4.7 实现现场端模块</p>
-        </div> -->
-      </el-card>
+        <div class="text item">
+          <p>无</p>
+        </div>
+      </el-card> -->
     </el-row>
   </div>
 </template>
@@ -58,7 +100,18 @@ export default {
   data() {
     return {
       currentDate: new Date(),
+      win: window,
     };
+  },
+  methods: {
+    routerTest() {
+      // 直接跳转
+      window.location.href = "http://www.baidu.com";
+      // 打开新标签页
+      window.open("http://www.baidu.com");
+      // 页面重定向
+      window.location.replace("http://www.baidu.com");
+    },
   },
 };
 </script>
@@ -138,5 +191,14 @@ span {
 
 .clearfix:after {
   clear: both;
+}
+
+.icon {
+  width: 0.8em;
+  height: 0.8em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+  margin-right: 5px;
 }
 </style>

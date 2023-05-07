@@ -16,11 +16,6 @@ const routes = [
         component: () => import("../views/home"),
       },
       {
-        path: "/mall",
-        name: "mall",
-        component: () => import("../views/mall"),
-      },
-      {
         path: "/page1",
         name: "page1",
         component: () => import("../views/other/pageOne.vue"),
@@ -30,22 +25,6 @@ const routes = [
         name: "page2",
         component: () => import("../views/other/pageTwo.vue"),
       },
-      {
-        path: "/ticket",
-        name: "ticket",
-        component: () => import("../views/ticket"),
-      },
-      {
-        path: "/detect",
-        name: "detect",
-        component: () => import("../views/detect"),
-      },
-      {
-        path: "/visual",
-        name: "visual",
-        component: () => import("../views/visual"),
-      },
-
       {
         path: "/introduce",
         name: "introduce",
@@ -92,11 +71,6 @@ const routes = [
         component: () => import("../views/check"),
       },
     ],
-  },
-  {
-    path: "/onsite",
-    name: "onsite",
-    component: () => import("../views/onsite"),
   },
   {
     path: "/login",

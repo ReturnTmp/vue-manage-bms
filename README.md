@@ -1,4 +1,4 @@
-# vue-manage
+# vue-manage-bms
 
 ## Project setup
 ```
