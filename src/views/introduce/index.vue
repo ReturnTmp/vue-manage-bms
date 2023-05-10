@@ -29,7 +29,14 @@
             >
               <use xlink:href="#icon-github"></use>
             </svg>
-            <svg style="cursor: pointer" class="icon" aria-hidden="true">
+            <svg
+              @click="
+                win.open('https://gitee.com/cheng-guanghao/wenyuan-bms-vue/')
+              "
+              style="cursor: pointer"
+              class="icon"
+              aria-hidden="true"
+            >
               <use xlink:href="#icon-gitee"></use>
             </svg>
           </span>

@@ -8,7 +8,7 @@
       src="https://img.shields.io/badge/-github-gray?style=for-the-badge&logo=github"
     />
   </a>
-  <a href="https://gitee.com/ReturnTmp/wenyuan-bms-vue">
+  <a href="https://gitee.com/cheng-guanghao/wenyuan-bms-vue">
     <img
       src="https://img.shields.io/badge/-gitee-red?style=for-the-badge&logo=gitee"
     />
@@ -96,6 +96,7 @@
 
 ```bash
 # clone the project
+git clone https://github.com/ReturnTmp/wenyuan-bms-vue.git
 
 # install dependency
 npm install or yarn
