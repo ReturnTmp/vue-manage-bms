@@ -22,7 +22,7 @@
           >
           <span style="width: 70%; text-align: end; display: inline-block">
             <svg
-              @click="win.open('https://github.com/ReturnTmp/vue-manage-bms/')"
+              @click="win.open('https://github.com/ReturnTmp/wenyuan-bms-vue/')"
               style="cursor: pointer"
               class="icon"
               aria-hidden="true"
