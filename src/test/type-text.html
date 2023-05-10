@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>打字机效果</title>
+  </head>
+  <style>
+    .type-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #222;
+    }
+    .line {
+      width: 0;
+      color: #eee;
+      text-align: center;
+      white-space: nowrap;
+      border-right: 2px solid greenyellow;
+      overflow: hidden;
+    }
+    .animation {
+      animation: grow 4s steps(30) 0.5s infinite normal,
+        blink 0.5s steps(1) infinite normal;
+    }
+    @keyframes grow {
+      0% {
+        width: 0;
+      }
+      50% {
+        width: 400px;
+      }
+      100% {
+        width: 0px;
+      }
+    }
+    @keyframes blink {
+      from {
+        border-right-color: greenyellow;
+      }
+      to {
+        border-right-color: transparent;
+      }
+    }
+  </style>
+
+  <body>
+    <div class="type-container">
+      <p class="line animation">朝赏千篇，暮读万卷，古今中外尽在心间</p>
+    </div>
+  </body>
+</html>
