@@ -1,27 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <title>Web Speech API Demo</title>
   </head>
   <body>
-    <h1 align="center" style="margin: 30px 0 30px; font-weight: bold">
-      WenYuan
-    </h1>
-    <h4 align="center">基于Vue开发的纯前端图书管理系统</h4>
-    <p align="center">
-      <a href="https://github.com/ReturnTmp/wenyuan-bms-vue">
-        <img
-          src="https://img.shields.io/badge/-github-gray?style=for-the-badge&logo=github"
-        />
-      </a>
-      <a href="https://gitee.com/ReturnTmp/wenyuan-bms-vue">
-        <img
-          src="https://img.shields.io/badge/-gitee-red?style=for-the-badge&logo=gitee"
-        />
-      </a>
-    </p>
+    <h1>Web Speech API Demo</h1>
+    <p>请说出一些文字：</p>
+    <textarea id="input" cols="50" rows="5"></textarea>
+    <br />
+    <button id="speakBtn">语言合成</button>
+    <button id="transcribeBtn">语音识别</button>
+    <br />
+    <p id="transcription"></p>
+
+    <script>
+      const recognition = new webkitSpeechRecognition(); // 实例化语音识别对象
+      recognition.continuous = true; // 连续识别，直到 stop() 被调用
+
+      const transcribeBtn = document.getElementById("transcribeBtn");
+      transcribeBtn.addEventListener("click", function () {
+        recognition.start(); // 开始语音识别
+      });
+
+      recognition.onresult = function (event) {
+        let result = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          result += event.results[i][0].transcript;
+        }
+        const transcript = document.getElementById("transcription");
+        transcript.innerHTML = result; // 显示语音识别结果
+      };
+
+      const speakBtn = document.getElementById("speakBtn");
+      speakBtn.addEventListener("click", function () {
+        const text = document.getElementById("input").value; // 获取文本框中的文本
+        const msg = new SpeechSynthesisUtterance(text); // 实例化语音合成对象
+        window.speechSynthesis.speak(msg); // 开始语音合成
+      });
+    </script>
   </body>
 </html>
