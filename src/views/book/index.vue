@@ -8,9 +8,9 @@
         </svg>
       </a>
     </h3>
-    <div class="popular-book-box">
+    <div class="book-box">
       <div class="img-box" v-for="(item, index) in popularList" :key="index">
-        <img :src="item.img" alt="" />
+        <img :src="item.img" alt="" @click="chooseBook(item)" />
         <i class="title-tag">{{ item.title }}</i>
         <i class="borrow-btn" @click="borrowBook(item.title)">借阅</i>
       </div>
@@ -24,9 +24,29 @@
         </svg>
       </a>
     </h3>
-    <div class="recommend-book-box">
+    <div class="book-box">
       <div class="img-box" v-for="(item, index) in recommendList" :key="index">
-        <img :src="item.img" alt="" />
+        <img :src="item.img" alt="" @click="chooseBook(item)" />
+        <i class="title-tag">{{ item.title }}</i>
+        <i class="borrow-btn" @click="borrowBook(item.title)">借阅</i>
+      </div>
+    </div>
+
+    <h3>
+      畅销图书
+      <a href="">
+        <svg class="icon" aria-hidden="true">
+          <use :xlink:href="'#icon-' + 'refresh'"></use>
+        </svg>
+      </a>
+    </h3>
+    <div class="book-box">
+      <div
+        class="img-box"
+        v-for="(item, index) in bestsellingList"
+        :key="index"
+      >
+        <img :src="item.img" alt="" @click="chooseBook(item)" />
         <i class="title-tag">{{ item.title }}</i>
         <i class="borrow-btn" @click="borrowBook(item.title)">借阅</i>
       </div>
@@ -55,16 +75,69 @@
         >
       </span>
     </el-dialog>
+
+    <!-- <pdf src="../../assets/pdf/s27106600.pdf"></pdf> -->
+    <!-- <div>
+      {{ currentPage }} / {{ pageCount }}
+      <pdf
+        src="https://www.lilnong.top/static/pdf/B-4-RxJS%E5%9C%A8React%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8-%E9%BE%99%E9%80%B8%E6%A5%A0_.pdf"
+        @num-pages="pageCount = $event"
+        @page-loaded="currentPage = $event"
+      ></pdf>
+    </div> -->
+
+    <el-dialog
+      title="图书预览"
+      :visible.sync="bookFileVisible"
+      width="26%"
+      :before-close="handleClose"
+    >
+      <div v-if="bookFilePath">
+        <div style="display: flex; justify-content: space-between">
+          <div>
+            <el-button>{{ currentPage }} / {{ numPages }}</el-button>
+          </div>
+          <div>
+            <el-button @click="currentPage > 1 ? currentPage-- : currentPage"
+              >&lt;&lt;</el-button
+            >
+            <el-button
+              @click="currentPage < numPages ? currentPage++ : currentPage"
+              >&gt;&gt;</el-button
+            >
+          </div>
+        </div>
+        <div>
+          <pdf :src="bookFilePath" :page="currentPage"></pdf>
+        </div>
+      </div>
+      <div v-else>
+        <span>暂无预览</span>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import pdf from "vue-pdf";
 export default {
+  components: {
+    pdf,
+  },
   data() {
     return {
+      currentPage: 1,
+      numPages: null,
+      bookFilePath: null,
+      bookFileVisible: false,
       bookTitle: "",
       dialogVisible: false,
       popularList: [
+        {
+          img: require("../../assets/images/source/popular/s27003183.jpg"),
+          title: "局外人",
+          bookFilePath: "/static/s27003183.pdf",
+        },
         {
           img: require("../../assets/images/source/popular/s1070959.jpg"),
           title: "红楼梦",
@@ -85,12 +158,17 @@ export default {
           img: require("../../assets/images/source/popular/s29101586.jpg"),
           title: "哈利波特",
         },
-        {
-          img: require("../../assets/images/source/popular/s30016152.jpg"),
-          title: "三体",
-        },
+        // {
+        //   img: require("../../assets/images/source/popular/s30016152.jpg"),
+        //   title: "三体",
+        // },
       ],
       recommendList: [
+        {
+          img: require("../../assets/images/source/recommand/s27106600.jpg"),
+          title: "球状闪电",
+          bookFilePath: "/static/s27106600.pdf",
+        },
         {
           img: require("../../assets/images/source/recommand/s1076932.jpg"),
           title: "三国演义",
@@ -111,9 +189,35 @@ export default {
           img: require("../../assets/images/source/recommand/s24514468.jpg"),
           title: "白夜行",
         },
+        // {
+        //   img: require("../../assets/images/source/recommand/s29651121.jpg"),
+        //   title: "房思琪的初恋乐园",
+        // },
+      ],
+      bestsellingList: [
         {
-          img: require("../../assets/images/source/recommand/s29651121.jpg"),
-          title: "房思琪的初恋乐园",
+          img: require("../../assets/images/source/bestselling/s4521754.jpg"),
+          title: "悲惨世界",
+        },
+        {
+          img: require("../../assets/images/source/bestselling/s1020454.jpg"),
+          title: "哭泣的骆驼",
+        },
+        {
+          img: require("../../assets/images/source/bestselling/s24611679.jpg"),
+          title: "文学回忆录",
+        },
+        {
+          img: require("../../assets/images/source/bestselling/s2651394.jpg"),
+          title: "灿烂千阳",
+        },
+        {
+          img: require("../../assets/images/source/bestselling/s1146614.jpg"),
+          title: "人间词话",
+        },
+        {
+          img: require("../../assets/images/source/bestselling/s3893343.jpg"),
+          title: "美的历程",
         },
       ],
     };
@@ -124,11 +228,37 @@ export default {
       this.bookTitle = title;
       this.dialogVisible = true;
     },
+    async chooseBook(item) {
+      console.log(item);
+      this.bookFileVisible = !this.bookFileVisible;
+      this.bookFilePath = item.bookFilePath;
+      // 获取总页数
+      await pdf.createLoadingTask(this.bookFilePath).promise.then((pdf) => {
+        this.numPages = pdf.numPages;
+      });
+      console.log(this.numPages);
+    },
+    handleClose() {
+      this.bookFileVisible = false;
+      this.bookFilePath = null;
+      this.currentPage = 1;
+      this.numPages = null;
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.book-content {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: block;
+}
+// .book-content.active {
+//   display: block;
+// }
+
 // .dialog-content /deep/ qrcode-img {
 //   width: 100%;
 //   height: 100%;
@@ -168,17 +298,11 @@ export default {
     margin-top: 30px;
     margin-bottom: 10px;
   }
-  .popular-book-box {
+  .book-box {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
   }
-  .recommend-book-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-  }
-
   .img-box {
     cursor: pointer;
     display: inline-block;

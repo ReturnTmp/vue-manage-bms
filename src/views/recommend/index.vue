@@ -8,8 +8,8 @@
         </svg>
       </a>
     </h3> -->
-    <div class="popular-book-box">
-      <div class="img-box" v-for="(item, index) in popularList" :key="index">
+    <div class="popular-book-box" v-for="(bookItem, bookIndex) in bookList">
+      <div class="img-box" v-for="(item, index) in bookItem" :key="index">
         <img :src="item.img" alt="" />
         <i class="title-tag">{{ item.title }}</i>
         <i class="borrow-btn">借阅</i>
@@ -38,57 +38,85 @@
 export default {
   data() {
     return {
-      popularList: [
-        {
-          img: require("../../assets/images/source/popular/s1070959.jpg"),
-          title: "红楼梦",
-        },
-        {
-          img: require("../../assets/images/source/popular/s4371408.jpg"),
-          title: "1984",
-        },
-        {
-          img: require("../../assets/images/source/popular/s27237850.jpg"),
-          title: "百年孤独",
-        },
-        {
-          img: require("../../assets/images/source/popular/s29053580.jpg"),
-          title: "活着",
-        },
-        {
-          img: require("../../assets/images/source/popular/s29101586.jpg"),
-          title: "哈利波特",
-        },
-        {
-          img: require("../../assets/images/source/popular/s30016152.jpg"),
-          title: "三体",
-        },
-      ],
-      recommendList: [
-        {
-          img: require("../../assets/images/source/recommand/s1076932.jpg"),
-          title: "三国演义",
-        },
-        {
-          img: require("../../assets/images/source/recommand/s1078958.jpg"),
-          title: "飘",
-        },
-        {
-          img: require("../../assets/images/source/recommand/s1229240.jpg"),
-          title: "福尔摩斯探案全集",
-        },
-        {
-          img: require("../../assets/images/source/recommand/s2347590.jpg"),
-          title: "动物农场",
-        },
-        {
-          img: require("../../assets/images/source/recommand/s24514468.jpg"),
-          title: "白夜行",
-        },
-        {
-          img: require("../../assets/images/source/recommand/s29651121.jpg"),
-          title: "房思琪的初恋乐园",
-        },
+      bookList: [
+        [
+          {
+            img: require("../../assets/images/source/1/s1070959.jpg"),
+            title: "红楼梦",
+          },
+          {
+            img: require("../../assets/images/source/1/s4371408.jpg"),
+            title: "1984",
+          },
+          {
+            img: require("../../assets/images/source/1/s27237850.jpg"),
+            title: "百年孤独",
+          },
+          {
+            img: require("../../assets/images/source/1/s29053580.jpg"),
+            title: "活着",
+          },
+          {
+            img: require("../../assets/images/source/1/s29101586.jpg"),
+            title: "哈利波特",
+          },
+          {
+            img: require("../../assets/images/source/1/s30016152.jpg"),
+            title: "三体",
+          },
+        ],
+        [
+          {
+            img: require("../../assets/images/source/2/s1076932.jpg"),
+            title: "三国演义",
+          },
+          {
+            img: require("../../assets/images/source/2/s1078958.jpg"),
+            title: "飘",
+          },
+          {
+            img: require("../../assets/images/source/2/s1229240.jpg"),
+            title: "福尔摩斯探案全集",
+          },
+          {
+            img: require("../../assets/images/source/2/s2347590.jpg"),
+            title: "动物农场",
+          },
+          {
+            img: require("../../assets/images/source/2/s24514468.jpg"),
+            title: "白夜行",
+          },
+          {
+            img: require("../../assets/images/source/2/s29651121.jpg"),
+            title: "房思琪的初恋乐园",
+          },
+        ],
+        [
+          {
+            img: require("../../assets/images/source/3/s2347562.jpg"),
+            title: "刀锋",
+          },
+          {
+            img: require("../../assets/images/source/3/s2962510.jpg"),
+            title: "无人生还",
+          },
+          {
+            img: require("../../assets/images/source/3/s8968135.jpg"),
+            title: "树上的男爵 ",
+          },
+          {
+            img: require("../../assets/images/source/3/s33640730.jpg"),
+            title: "秋园",
+          },
+          {
+            img: require("../../assets/images/source/3/s27003191.jpg"),
+            title: "鼠疫",
+          },
+          {
+            img: require("../../assets/images/source/3/s4250062.jpg"),
+            title: "傲慢与偏见",
+          },
+        ],
       ],
     };
   },
@@ -149,6 +177,7 @@ export default {
   .img-box {
     cursor: pointer;
     display: inline-block;
+    margin-top: 30px;
     width: 100px;
     height: 130px;
     border-radius: 10px;

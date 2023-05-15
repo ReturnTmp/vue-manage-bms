@@ -37,7 +37,7 @@
         type="card"
         height="250px"
       >
-        <el-carousel-item v-for="item in 6" :key="item">
+        <el-carousel-item v-for="item in 8" :key="item">
           <img
             :src="require('../../assets/images/column/' + item + '.jpg')"
             alt=""
@@ -67,14 +67,52 @@
               </el-descriptions-item>
             </el-descriptions>
 
-            <el-badge :value="12" class="item">
-              <el-button size="small">评论</el-button>
-            </el-badge>
-            <el-badge :value="3" class="item">
-              <el-button size="small">回复</el-button>
+            <el-badge :value="consultReplyList.length" class="item">
+              <el-button size="small" @click="consultDialogForm.visible = true"
+                >回复</el-button
+              >
             </el-badge>
           </div>
         </el-card>
+        <!-- 所有咨询回复 -->
+        <el-card
+          style="margin-top: 10px"
+          class="box-card"
+          v-for="item in consultReplyList"
+          :key="item"
+        >
+          <div class="text item">{{ item }}</div>
+        </el-card>
+
+        <el-dialog :visible.sync="consultDialogForm.visible" width="30%">
+          <el-form
+            ref="consultDialogForm"
+            :model="consultDialogForm"
+            :rules="rules"
+            label-width="80px"
+          >
+            <el-form-item label="回复内容" prop="replay">
+              <el-input
+                type="textarea"
+                :rows="2"
+                v-model="consultDialogForm.replay"
+              >
+              </el-input>
+            </el-form-item>
+          </el-form>
+
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button
+              type="primary"
+              @click="
+                consultReplyList.push(consultDialogForm.replay);
+                consultDialogForm.visible = false;
+              "
+              >发 送</el-button
+            >
+          </span>
+        </el-dialog>
       </div>
 
       <!-- 读者来信 -->
@@ -95,9 +133,6 @@
               </el-descriptions-item>
             </el-descriptions>
 
-            <el-badge :value="2" class="item">
-              <el-button size="small">评论</el-button>
-            </el-badge>
             <el-badge :value="0" class="item">
               <el-button size="small">回复</el-button>
             </el-badge>
@@ -111,8 +146,30 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      consultDialogForm: {
+        visible: false,
+        replay: "",
+      },
+      consultReplyList: ["《乱世佳人》暂时还未开放借阅"],
+      letterForm: {
+        visible: false,
+        replay: "",
+      },
+      rules: {
+        replay: [
+          { required: true, message: "请输入回复内容", trigger: "blur" },
+          {
+            min: 5,
+            max: 50,
+            message: "长度应在 5 到 50 字符之间",
+            trigger: "blur",
+          },
+        ],
+      },
+    };
   },
+  methods: {},
 };
 </script>
 

@@ -73,18 +73,21 @@
         </el-card>
       </div>
     </el-col>
+    <dialog-drawer></dialog-drawer>
   </el-row>
 </template>
 <script>
 import { getData } from "@/api/data.js";
 // import * as echarts from "echarts";
 import Echart from "@/components/ECharts.vue";
+import DialogDrawer from "@/components/DialogDrawer.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "home",
   components: {
     Echart,
+    DialogDrawer,
   },
   data() {
     return {
@@ -204,6 +207,7 @@ export default {
       }
     });
   },
+  methods: {},
   computed: {
     ...mapState({
       username: (state) => state.user.username,
