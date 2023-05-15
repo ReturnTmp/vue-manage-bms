@@ -99,18 +99,76 @@
         </div>
       </el-card> -->
     </el-row>
+
+    <!-- <el-upload
+      class="avatar-uploader"
+      :auto-upload="false"
+      accept="image/jpeg,image/gif,image/png"
+      action="#"
+      :show-file-list="false"
+      :on-change="onUploadChange"
+    >
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload> -->
   </div>
 </template>
 
 <script>
+import Tesseract from "tesseract.js";
 export default {
   data() {
     return {
+      headers: { "Content-Type": "multipart/form-data" },
+      imageUrl: "",
+      config: {
+        lang: "eng",
+        oem: 1,
+        psm: 3,
+      },
       currentDate: new Date(),
       win: window,
     };
   },
   methods: {
+    onUploadChange(file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file.raw);
+      let that = this;
+      reader.onload = function (e) {
+        console.log(this.result);
+        let blob = that.base64ToBlob(this.result);
+        that.identifyBookInfo(blob);
+      };
+    },
+    base64ToBlob(base64) {
+      let arr = base64.split(",");
+      let mime = arr[0].match(/:(.*?);/)[1];
+      let bstr = atob(arr[1]);
+      let n = bstr.length;
+      let u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new Blob([u8arr], { type: mime });
+    },
+    identifyBookName(text) {
+      // let text =
+      //   "! 图 书 在 版 编 目 (C I P) 数 据 数 据 库 系 统 概 论 王 珊 , 萨 师 煊 编 著 . 一 5 版";
+      const regex = /图 书 在 版 编 目 \(C I P\) 数 据(.{15})/;
+      const result = regex.exec(text);
+      console.log(result);
+      // console.log(result[1]);
+    },
+    identifyBookInfo(image) {
+      // 支持语言 https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016
+      Tesseract.recognize(image, "chi_sim", {
+        logger: (m) => console.log(m),
+      }).then(({ data: { text } }) => {
+        console.log(text);
+        this.identifyBookName(text);
+      });
+    },
     routerTest() {
       // 直接跳转
       window.location.href = "http://www.baidu.com";
@@ -207,5 +265,29 @@ span {
   fill: currentColor;
   overflow: hidden;
   margin-right: 5px;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

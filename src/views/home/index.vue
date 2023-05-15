@@ -73,7 +73,7 @@
         </el-card>
       </div>
     </el-col>
-    <dialog-drawer></dialog-drawer>
+    <!-- <dialog-drawer></dialog-drawer> -->
   </el-row>
 </template>
 <script>

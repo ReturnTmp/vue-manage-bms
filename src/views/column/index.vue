@@ -105,10 +105,7 @@
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button
               type="primary"
-              @click="
-                consultReplyList.push(consultDialogForm.replay);
-                consultDialogForm.visible = false;
-              "
+              @click="consultReplySend('consultDialogForm')"
               >发 送</el-button
             >
           </span>
@@ -123,7 +120,7 @@
           </div>
 
           <div class="reader-letter-item">
-            <el-descriptions title="" column="2">
+            <el-descriptions title="" :column="2">
               <el-descriptions-item label="用户名">admin</el-descriptions-item>
               <el-descriptions-item label="邮箱"
                 >returntmp@qq.com</el-descriptions-item
@@ -169,7 +166,24 @@ export default {
       },
     };
   },
-  methods: {},
+  methods: {
+    consultReplySend(formName) {
+      let that = this;
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          that.consultReplyList.push(that.consultDialogForm.replay);
+          that.consultDialogForm.visible = false;
+          that.$message({
+            message: "发送成功",
+            type: "success",
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+  },
 };
 </script>
 

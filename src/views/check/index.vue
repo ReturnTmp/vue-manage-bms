@@ -16,7 +16,7 @@
       </div>
     </el-dialog>
     <div class="manage-header">
-      <el-button type="primary" @click="addBook">+ 新增</el-button>
+      <!-- <el-button type="primary" @click="addBook">+ 新增</el-button> -->
       <common-form
         :formLabel="formLabel"
         :form="searchFrom"

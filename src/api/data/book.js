@@ -185,4 +185,17 @@ export default {
       },
     };
   },
+  /**
+   * 上传图书
+   * @param {*} item
+   */
+  uploadBook(item) {
+    List.unshift(item);
+    return {
+      code: 20000,
+      data: {
+        imageUrl: "/static/$RP3VH8G.jpg",
+      },
+    };
+  },
 };
