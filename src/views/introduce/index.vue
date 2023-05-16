@@ -100,7 +100,7 @@
       </el-card> -->
     </el-row>
 
-    <!-- <el-upload
+    <el-upload
       class="avatar-uploader"
       :auto-upload="false"
       accept="image/jpeg,image/gif,image/png"
@@ -110,7 +110,7 @@
     >
       <img v-if="imageUrl" :src="imageUrl" class="avatar" />
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload> -->
+    </el-upload>
   </div>
 </template>
 
@@ -119,13 +119,7 @@ import Tesseract from "tesseract.js";
 export default {
   data() {
     return {
-      headers: { "Content-Type": "multipart/form-data" },
       imageUrl: "",
-      config: {
-        lang: "eng",
-        oem: 1,
-        psm: 3,
-      },
       currentDate: new Date(),
       win: window,
     };

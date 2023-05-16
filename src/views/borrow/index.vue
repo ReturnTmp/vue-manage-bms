@@ -4,12 +4,12 @@
       :title="operateType === 'add' ? '新增图书' : '更新图书'"
       :visible.sync="isShow"
     >
-      <common-form
+      <borrow-form
         :formLabel="opertateFormLabel"
         :form="operateForm"
         :inline="true"
         ref="form"
-      ></common-form>
+      ></borrow-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="isShow = false">取消</el-button>
         <el-button type="primary" @click="confirm">确定</el-button>
@@ -39,15 +39,19 @@
   </div>
 </template>
 <script>
-// 用户管理自己借出或是挂出的图书
+/**
+ * 藏书管理
+ */
+import BorrowForm from "@/components/BorrowForm.vue";
 import CommonForm from "@/components/CommonForm.vue";
 import CommonTable from "@/components/CommonTable.vue";
 import { getBook } from "@/api/data";
 export default {
   name: "Book",
   components: {
-    CommonForm,
+    BorrowForm,
     CommonTable,
+    CommonForm,
   },
   data() {
     return {
