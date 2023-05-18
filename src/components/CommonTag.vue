@@ -1,65 +1,77 @@
 <template>
-    <div class="tabs">
-        <el-tag
-            v-for="(tag, index) in tags"
-            :key="tag.name"
-            :closable="tag.name !== 'home'"
-            :effect="$route.name === tag.name ? 'dark' : 'plain'"
-            @click="changeMenu(tag)"
-            @close="handleClose(tag, index)"
-            size="small"
-
-        >
-            {{ tag.label }}
-        </el-tag>
+  <div class="tabs">
+    <el-tag
+      v-for="(tag, index) in tags"
+      :key="tag.name"
+      :closable="tag.name !== 'home'"
+      :effect="$route.name === tag.name ? 'dark' : 'plain'"
+      @click="changeMenu(tag)"
+      @close="handleClose(tag, index)"
+      size="small"
+    >
+      {{ tag.label }}
+    </el-tag>
+    <div class="gpt-box" @click="win.open('https://gpt.gogpt.site/')">
+      <el-avatar :src="gptImg"></el-avatar>
     </div>
+  </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from "vuex";
 export default {
-    name: 'CommonTag',
-    data() {
-        return {
-
-        }
+  name: "CommonTag",
+  data() {
+    return {
+      gptImg: require("@/assets/images/chatgpt.webp"),
+      win: window,
+    };
+  },
+  computed: {
+    ...mapState({
+      tags: (state) => state.tab.tabsList,
+    }),
+  },
+  methods: {
+    ...mapMutations({
+      close: "closeTag",
+    }),
+    changeMenu(item) {
+      this.$router.push({ name: item.name });
     },
-    computed: {
-        ...mapState({
-            tags: state => state.tab.tabsList
-        })
+    handleClose(tag, index) {
+      const length = this.tags.length - 1;
+      this.close(tag);
+      if (tag.name !== this.$route.name) {
+        return;
+      }
+      if (index === length) {
+        this.$router.push({
+          name: this.tags[index - 1].name,
+        });
+      } else {
+        this.$router.push({
+          name: this.tags[index].name,
+        });
+      }
     },
-    methods: {
-        ...mapMutations({
-            close: 'closeTag'
-        }),
-        changeMenu(item) {
-            this.$router.push({ name: item.name })
-        },
-        handleClose(tag, index) {
-            const length = this.tags.length - 1
-            this.close(tag)
-            if (tag.name !== this.$route.name) {
-                return;
-            }
-            if (index === length) {
-                this.$router.push({
-                    name: this.tags[index - 1].name
-                })
-            } else {
-                this.$router.push({
-                    name: this.tags[index].name
-                })
-            }
-        }
-    }
-}
+  },
+};
 </script>
+
 <style lang="less" scoped>
+.gpt-box {
+  position: absolute;
+  right: 0%;
+  transform: translate(-50%, -50%);
+}
+.gpt-box:hover {
+  cursor: pointer;
+}
 .tabs {
-    padding: 20px;
-    .el-tag {
-        margin-right: 15px;
-        cursor: pointer;
-    }
+  padding: 20px;
+  .el-tag {
+    margin-right: 15px;
+    cursor: pointer;
+  }
 }
 </style>

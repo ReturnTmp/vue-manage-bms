@@ -99,18 +99,6 @@
         </div>
       </el-card> -->
     </el-row>
-
-    <el-upload
-      class="avatar-uploader"
-      :auto-upload="false"
-      accept="image/jpeg,image/gif,image/png"
-      action="#"
-      :show-file-list="false"
-      :on-change="onUploadChange"
-    >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
   </div>
 </template>
 
@@ -122,6 +110,7 @@ export default {
       imageUrl: "",
       currentDate: new Date(),
       win: window,
+      MODEL_URL: "/models",
     };
   },
   methods: {
