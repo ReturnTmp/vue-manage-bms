@@ -1,5 +1,15 @@
 <template>
   <div class="main-container">
+    <el-button v-if="authority == 1" type="success" @click="QrcodeVisible = true">还书窗口</el-button>
+    <el-dialog title="还书窗口" :visible.sync="QrcodeVisible">
+      <p class="error">{{ error }}</p>
+
+      <!-- <p class="decode-result">
+          Last result: <b>{{ result }}</b>
+        </p> -->
+      <qrcode-stream @decode="onDecode" @init="onInit"
+    /></el-dialog>
+
     <h3>
       热门图书
       <a href="">
@@ -120,12 +130,18 @@
 
 <script>
 import pdf from "vue-pdf";
+import { mapState } from "vuex";
+import { QrcodeStream } from "vue-qrcode-reader";
 export default {
   components: {
     pdf,
+    QrcodeStream,
   },
   data() {
     return {
+      QrcodeVisible: false,
+      result: "",
+      error: "",
       currentPage: 1,
       numPages: null,
       bookFilePath: null,
@@ -223,6 +239,39 @@ export default {
     };
   },
   methods: {
+    onDecode(result) {
+      this.result = result;
+      this.QrcodeVisible = false;
+      this.$notify({
+        title: "还书成功",
+        message: `识别信息：\r\n ${this.result}`,
+        type: "success",
+      });
+    },
+    async onInit(promise) {
+      try {
+        await promise;
+      } catch (error) {
+        if (error.name === "NotAllowedError") {
+          this.error = "ERROR: you need to grant camera access permission";
+        } else if (error.name === "NotFoundError") {
+          this.error = "ERROR: no camera on this device";
+        } else if (error.name === "NotSupportedError") {
+          this.error = "ERROR: secure context required (HTTPS, localhost)";
+        } else if (error.name === "NotReadableError") {
+          this.error = "ERROR: is the camera already in use?";
+        } else if (error.name === "OverconstrainedError") {
+          this.error = "ERROR: installed cameras are not suitable";
+        } else if (error.name === "StreamApiNotSupportedError") {
+          this.error = "ERROR: Stream API is not supported in this browser";
+        } else if (error.name === "InsecureContextError") {
+          this.error =
+            "ERROR: Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.";
+        } else {
+          this.error = `ERROR: Camera error (${error.name})`;
+        }
+      }
+    },
     borrowBook(title) {
       console.log(title);
       this.bookTitle = title;
@@ -244,6 +293,12 @@ export default {
       this.currentPage = 1;
       this.numPages = null;
     },
+  },
+  computed: {
+    ...mapState({
+      username: (state) => state.user.username,
+      authority: (state) => state.user.authority,
+    }),
   },
 };
 </script>
@@ -322,5 +377,10 @@ export default {
     box-shadow: 0px 8px 20px 1px rgba(6, 35, 64, 0.3);
     filter: brightness(1.1);
   }
+}
+
+.error {
+  font-weight: bold;
+  color: red;
 }
 </style>

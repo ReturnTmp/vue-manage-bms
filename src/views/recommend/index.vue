@@ -12,7 +12,7 @@
       <div class="img-box" v-for="(item, index) in bookItem" :key="index">
         <img :src="item.img" alt="" />
         <i class="title-tag">{{ item.title }}</i>
-        <i class="borrow-btn">借阅</i>
+        <i style="visibility: hidden" class="borrow-btn">借阅</i>
       </div>
     </div>
 
