@@ -70,11 +70,6 @@ const routes = [
         name: "check",
         component: () => import("../views/check"),
       },
-      {
-        path: "/face",
-        name: "face",
-        component: () => import("../views/face"),
-      },
     ],
   },
   {
